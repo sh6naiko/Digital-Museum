@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DIGITAL MUSEUM: Website Project</title>
+    <meta
+        name="description"
+        content="A modern museum-style digital gallery featuring Philippine masterpieces with cinematic transitions and curated notes."
+    >
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="landing-overlay" id="landing">
+        <div class="landing-overlay__art" aria-hidden="true">
+            <img
+                class="landing-overlay__image landing-overlay__image--primary"
+                src="images/Spoliarium.jpg"
+                alt=""
+                fetchpriority="high"
+            >
+            <img
+                class="landing-overlay__image landing-overlay__image--secondary"
+                src="images/madonnaslums.jpg"
+                alt=""
+                decoding="async"
+            >
+        </div>
+        <div class="landing-overlay__grain" aria-hidden="true"></div>
+
+        <div class="landing-overlay__content">
+            <p class="landing-overlay__eyebrow">Curated Digital Collection</p>
+            <h1 class="landing-overlay__title">Digital Art Exhibit</h1>
+            <p class="landing-overlay__subtitle">A curated collection of timeless masterpieces</p>
+            <button class="landing-overlay__cta" id="enterGalleryButton" type="button">
+                Enter Gallery
+            </button>
+        </div>
+    </div>
+
+    <header class="site-header" id="siteHeader">
+        <a class="site-brand" href="#gallery-intro">Digital Art Exhibit</a>
+
+        <button
+            class="menu-toggle"
+            id="menuToggle"
+            type="button"
+            aria-expanded="false"
+            aria-controls="siteNav"
+            aria-label="Toggle navigation"
+        >
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <nav class="site-nav" id="siteNav" aria-label="Primary navigation">
+            <a class="site-nav__link is-active" href="#gallery-intro" data-nav-link="home">Home</a>
+
+            <div class="site-nav__dropdown" id="galleryDropdown">
+                <button
+                    class="site-nav__link site-nav__toggle"
+                    id="galleryDropdownToggle"
+                    type="button"
+                    aria-expanded="false"
+                    aria-controls="galleryMenu"
+                    data-nav-link="gallery"
+                >
+                    <span>Gallery</span>
+                    <span class="site-nav__chevron" aria-hidden="true"></span>
+                </button>
+                <div class="site-nav__menu" id="galleryMenu"></div>
+            </div>
+
+            <a class="site-nav__link" href="#references" data-nav-link="references">References</a>
+        </nav>
+    </header>
+
+    <main class="site-main" id="siteMain">
+        <section class="gallery-intro section-shell" id="gallery-intro" data-nav-section="home">
+            <div class="gallery-intro__content">
+                <p class="section-label" data-animate="up">Permanent Collection</p>
+                <h2 class="gallery-intro__title" data-animate="up" style="--reveal-delay: 80ms;">
+                    Step through a museum-inspired sequence of landmark works and intimate curatorial notes.
+                </h2>
+                <p class="gallery-intro__text" data-animate="up" style="--reveal-delay: 160ms;">
+                    Each gallery room pairs a full-width artwork view with context, close reading, and a short
+                    interpretive statement designed for a cinematic, responsive web experience.
+                </p>
+                <a class="gallery-intro__link" href="#spoliarium" data-animate="up" style="--reveal-delay: 240ms;">
+                    Begin with Spoliarium
+                </a>
+            </div>
+        </section>
+
+        <div class="gallery-stack" id="gallery" aria-live="polite"></div>
+
+        <section class="references-section section-shell" id="references">
+            <div class="references-section__panel">
+                <div class="references-section__lead">
+                    <p class="section-label" data-animate="up">References</p>
+                    <h2 class="references-section__title" data-animate="up" style="--reveal-delay: 80ms;">
+                        Source links for the artwork context, subject notes, and historical framing.
+                    </h2>
+                    <p class="references-section__text" data-animate="up" style="--reveal-delay: 160ms;">
+                        This table gathers the public links used as starting points for the contextual descriptions and
+                        subject summaries shown throughout the gallery.
+                    </p>
+                </div>
+
+                <div class="references-table-wrap" data-animate="up" style="--reveal-delay: 220ms;">
+                    <table class="references-table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Artwork</th>
+                                <th scope="col">Used For</th>
+                                <th scope="col">Reference Link</th>
+                            </tr>
+                        </thead>
+                        <tbody id="referencesTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div class="modal" id="imageModal" aria-hidden="true">
+        <div class="modal__backdrop" data-close-modal></div>
+        <div class="modal__dialog modal__dialog--image" role="dialog" aria-modal="true" aria-labelledby="imageModalTitle">
+            <button class="modal__close" type="button" data-close-modal aria-label="Close image preview">×</button>
+            <p class="modal__eyebrow" id="imageModalTitle">Artwork Preview</p>
+            <img class="modal__image" id="modalImage" src="" alt="">
+        </div>
+    </div>
+
+    <div class="modal" id="detailsModal" aria-hidden="true">
+        <div class="modal__backdrop" data-close-modal></div>
+        <div class="modal__dialog modal__dialog--details" role="dialog" aria-modal="true" aria-labelledby="detailsTitle">
+            <button class="modal__close" type="button" data-close-modal aria-label="Close artwork details">×</button>
+            <p class="modal__eyebrow">Artwork Details</p>
+            <h2 class="modal__title" id="detailsTitle">Artwork Title</h2>
+            <dl class="modal__list">
+                <div class="modal__row">
+                    <dt>Artist</dt>
+                    <dd id="detailsArtist">Artist Name</dd>
+                </div>
+                <div class="modal__row">
+                    <dt>Year</dt>
+                    <dd id="detailsYear">Edit year</dd>
+                </div>
+                <div class="modal__row">
+                    <dt>Medium</dt>
+                    <dd id="detailsMedium">Edit medium</dd>
+                </div>
+                <div class="modal__row">
+                    <dt>Dimensions</dt>
+                    <dd id="detailsDimensions">Edit dimensions</dd>
+                </div>
+                <div class="modal__row">
+                    <dt>Location</dt>
+                    <dd id="detailsLocation">Edit current location</dd>
+                </div>
+            </dl>
+        </div>
+    </div>
+
+    <script src="script.js" defer></script>
+</body>
+</html>
